@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
-@Slf4j
 public class PostController {
 
     @Autowired

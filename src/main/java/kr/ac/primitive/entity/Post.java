@@ -25,4 +25,10 @@ public class Post {
     // 파일 경로
     private String filepath;
 
+    public void update(Post post) {
+        if(post.getTitle() != null)
+            this.title = post.getTitle();
+        if(post.getDescription() != null)
+            this.description = post.getDescription();
+    }
 }

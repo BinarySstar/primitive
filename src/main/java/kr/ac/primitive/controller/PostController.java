@@ -49,7 +49,7 @@ public class PostController {
     }
 
     //글 삭제하기
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Post> delete(@PathVariable Long id){
         Post deleted = postService.deletePost(id);
         return (deleted != null) ?

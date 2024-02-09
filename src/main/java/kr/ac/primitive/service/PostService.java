@@ -24,6 +24,7 @@ public class PostService {
 
     @Transactional
     public Post show(Long id){
+        log.info("Entity id : {} is called", id);
         return postRepository.findById(id).orElse(null);
     }
 
@@ -33,6 +34,7 @@ public class PostService {
         if(post.getId() != null) {
             return null;
         }
+        log.info("Entity id : {} is saved", post.getId());
         return postRepository.save(post);
     }
 
@@ -45,6 +47,7 @@ public class PostService {
             return null;
         }
         target.update(post);
+        log.info("Entity id : {} is updated", target.getId());
         return postRepository.save(target);
     }
 
@@ -55,6 +58,7 @@ public class PostService {
             return null;
         }
         postRepository.delete(target);
+        log.info("Entity id : {} is deleted", target.getId());
         return target;
     }
 }

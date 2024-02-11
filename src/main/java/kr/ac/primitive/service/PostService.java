@@ -34,7 +34,6 @@ public class PostService {
         if(post.getId() != null) {
             return null;
         }
-        log.info("Entity id : {} is saved", post.getId());
         return postRepository.save(post);
     }
 

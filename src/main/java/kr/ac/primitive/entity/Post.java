@@ -5,7 +5,7 @@ import lombok.*;
 
 @Entity
 @Builder
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
@@ -13,9 +13,15 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column
     private String description;
+
+    // private String date;
+    // private String[] participate;
+    // private String[] techStack;
 
     public void update(Post post) {
         if(post.getTitle() != null)

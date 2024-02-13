@@ -1,9 +1,5 @@
-package kr.ac.primitive.controller;
+package kr.ac.primitive.post;
 
-import kr.ac.primitive.dto.PostDto;
-import kr.ac.primitive.entity.Post;
-import kr.ac.primitive.service.PostService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
-package kr.ac.primitive.repository;
+package kr.ac.primitive.post;
 
-import kr.ac.primitive.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post, Long> {

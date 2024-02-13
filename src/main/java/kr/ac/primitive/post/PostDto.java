@@ -1,6 +1,5 @@
-package kr.ac.primitive.dto;
+package kr.ac.primitive.post;
 
-import kr.ac.primitive.entity.Post;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -11,6 +11,7 @@ import lombok.*;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "POST_ID")
     private Long id;
 
     @Column(nullable = false)

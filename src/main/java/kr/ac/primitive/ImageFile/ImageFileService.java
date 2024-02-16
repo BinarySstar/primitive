@@ -1,2 +1,4 @@
-package kr.ac.primitive.ImageFile;public class ImageFileService {
+package kr.ac.primitive.ImageFile;
+
+public class ImageFileService {
 }

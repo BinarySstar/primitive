@@ -1,2 +1,4 @@
-package kr.ac.primitive.ImageFile;public interface ImageFileRepository {
+package kr.ac.primitive.ImageFile;
+
+public interface ImageFileRepository {
 }

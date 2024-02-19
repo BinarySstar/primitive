@@ -1,19 +1,32 @@
 package kr.ac.primitive.user;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Entity
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    private String loginId;
+    @Column(nullable = false)
+    private String studentNumber;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String password;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String major;
+
+    public void update(User user) {
+        this.password = user.getPassword();
+    }
 }

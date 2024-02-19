@@ -1,34 +1,37 @@
 package kr.ac.primitive.user;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequiredArgsConstructor
+@RestController
 @RequestMapping("/users")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private final UserRepository userRepository;
-
-    @GetMapping("/add")
-    public String addForm(User user) {
-        return "users/addUserForm";
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/add")
-    public String save(@Valid User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return "users/addUserForm";
-        }
-        userRepository.save(user);
-        return "redirect:/";
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok().body(null);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register() {
+        return ResponseEntity.ok().body(null);
+    }
+
+    @GetMapping("/checkId")
+    public ResponseEntity<?> checkId() {
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update() {
+        return ResponseEntity.ok().body(null);
+    }
 }

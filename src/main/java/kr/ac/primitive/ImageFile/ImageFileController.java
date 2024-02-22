@@ -29,11 +29,13 @@ public class ImageFileController {
         return null;
     }
 
+    // 이미지 파일 수정
     @PatchMapping
     public ResponseEntity<?> update() {
         return null;
     }
 
+    // 이미지 파일 삭제
     @DeleteMapping
     public ResponseEntity<?> delete() {
         return null;

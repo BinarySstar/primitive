@@ -1,5 +1,8 @@
-package kr.ac.primitive.post;
+package kr.ac.primitive.controller;
 
+import kr.ac.primitive.entity.Post;
+import kr.ac.primitive.dto.PostDto;
+import kr.ac.primitive.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

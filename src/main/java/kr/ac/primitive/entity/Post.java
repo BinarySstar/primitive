@@ -1,4 +1,4 @@
-package kr.ac.primitive.post;
+package kr.ac.primitive.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

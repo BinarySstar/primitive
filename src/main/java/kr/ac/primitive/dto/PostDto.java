@@ -1,7 +1,7 @@
-package kr.ac.primitive.post;
+package kr.ac.primitive.dto;
 
+import kr.ac.primitive.entity.Post;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class PostDto {

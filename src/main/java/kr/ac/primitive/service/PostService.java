@@ -1,5 +1,8 @@
-package kr.ac.primitive.post;
+package kr.ac.primitive.service;
 
+import kr.ac.primitive.dto.PostDto;
+import kr.ac.primitive.entity.Post;
+import kr.ac.primitive.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

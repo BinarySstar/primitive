@@ -1,11 +1,13 @@
 package kr.ac.primitive.entity.post;
 
 import jakarta.persistence.*;
+import kr.ac.primitive.entity.participant.Participant;
 import kr.ac.primitive.entity.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter

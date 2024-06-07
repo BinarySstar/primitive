@@ -1,6 +1,7 @@
 package kr.ac.primitive.entity.user;
 
 import jakarta.persistence.*;
+import kr.ac.primitive.entity.participant.Participant;
 import kr.ac.primitive.entity.post.Post;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,9 +1,8 @@
 package kr.ac.primitive.controller;
 
-import kr.ac.primitive.entity.Post;
 import kr.ac.primitive.dto.PostDto;
+import kr.ac.primitive.entity.post.Post;
 import kr.ac.primitive.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,22 +10,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/primitive/api/posts")
 public class PostController {
 
-    @Autowired
-    private PostService postService;
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     // 글 전체 불러오기
     @GetMapping
     public List<Post> showAll() {
-        return postService.showAll();
+        return postService.getAll();
     }
 
-    // 글 불러오기
+    /**
+     * 특정 ID를 가진 Post를 반환하는 메서드입니다.
+     * @param id 조회하고자 하는 Post의 ID
+     * @return ID에 해당하는 Post 객체. 해당 ID를 가진 Post가 없을 경우 null 반환
+     */
     @GetMapping("/{id}")
     public Post show(@PathVariable Long id){
-        return postService.show(id);
+        return postService.get(id);
     }
 
     //글 작성하기

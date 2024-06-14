@@ -1,6 +1,7 @@
-package kr.ac.primitive.controller;
+package kr.ac.primitive.controller.post;
 
-import kr.ac.primitive.dto.PostDto;
+import kr.ac.primitive.dto.post.request.PostRequestDto;
+import kr.ac.primitive.dto.post.response.PostResponseDto;
 import kr.ac.primitive.entity.post.Post;
 import kr.ac.primitive.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -19,35 +20,33 @@ public class PostController {
         this.postService = postService;
     }
 
-    // 글 전체 불러오기
     @GetMapping
-    public List<Post> showAll() {
-        return postService.getAll();
+    public ResponseEntity<List<PostResponseDto>> getAllPosts() {
+        List<PostResponseDto> posts = postService.getAllPosts();
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 
-    /**
-     * 특정 ID를 가진 Post를 반환하는 메서드입니다.
-     * @param id 조회하고자 하는 Post의 ID
-     * @return ID에 해당하는 Post 객체. 해당 ID를 가진 Post가 없을 경우 null 반환
-     */
     @GetMapping("/{id}")
-    public Post show(@PathVariable Long id){
-        return postService.get(id);
+    public ResponseEntity<Post> getPost(@PathVariable Long id){
+        Post post = postService.getPost(id);
+        return (post != null) ?
+                ResponseEntity.status(HttpStatus.OK).body(post) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     //글 작성하기
     @PostMapping
-    public ResponseEntity<Post> create(@RequestBody PostDto postDto){
-        Post created = postService.createPost(postDto);
+    public ResponseEntity<Post> createPost(@RequestBody PostRequestDto requestDto){
+        Post created = postService.createPost(requestDto);
         return (created != null) ?
                 ResponseEntity.status(HttpStatus.OK).body(created) :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     //글 수정하기
-    @PatchMapping("/{id}")
-    public ResponseEntity<Post> update(@PathVariable Long id, @RequestBody PostDto postDto){
-        Post updated = postService.updatePost(id, postDto);
+    @PutMapping("/{id}")
+    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
+        Post updated = postService.updatePost(id, requestDto);
         return (updated != null) ?
                 ResponseEntity.status(HttpStatus.OK).body(updated) :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -55,7 +54,7 @@ public class PostController {
 
     //글 삭제하기
     @DeleteMapping("/{id}")
-    public ResponseEntity<Post> delete(@PathVariable Long id){
+    public ResponseEntity<Post> deletePost(@PathVariable Long id){
         Post deleted = postService.deletePost(id);
         return (deleted != null) ?
                 ResponseEntity.status(HttpStatus.OK).build() :

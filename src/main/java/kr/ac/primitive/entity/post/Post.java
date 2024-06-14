@@ -1,6 +1,7 @@
 package kr.ac.primitive.entity.post;
 
 import jakarta.persistence.*;
+import kr.ac.primitive.dto.post.request.PostRequestDto;
 import kr.ac.primitive.entity.participant.Participant;
 import kr.ac.primitive.entity.techstack.TechStack;
 import kr.ac.primitive.entity.user.User;
@@ -57,5 +58,16 @@ public class Post {
         this.user = user;
         this.techStacks = techStacks;
         this.participants = participants;
+    }
+
+    public void update(PostRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.summary = requestDto.getSummary();
+        this.description = requestDto.getDescription();
+        this.isPublic = requestDto.isPublic();
+        this.image = requestDto.getImage();
+        this.createdAt = LocalDateTime.now();
+        this.techStacks = requestDto.getTechStacks();
+        this.participants = requestDto.getParticipants();
     }
 }

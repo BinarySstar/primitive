@@ -1,10 +1,10 @@
 package kr.ac.primitive.service;
 
-import kr.ac.primitive.dto.PostDto;
-import kr.ac.primitive.entity.Post;
-import kr.ac.primitive.repository.PostRepository;
+import kr.ac.primitive.dto.post.request.PostRequestDto;
+import kr.ac.primitive.dto.post.response.PostResponseDto;
+import kr.ac.primitive.entity.post.Post;
+import kr.ac.primitive.entity.post.PostRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,50 +14,45 @@ import java.util.List;
 @Slf4j
 public class PostService {
 
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
-    @Transactional
-    public List<Post> showAll() {
-        return postRepository.findAll();
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
     }
 
-    @Transactional
-    public Post show(Long id){
-        log.info("Entity id : {} is called", id);
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> getAllPosts() {
+        List<Post> posts = postRepository.findAll();
+        return posts.stream().map(PostResponseDto::toDto).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Post getPost(Long id) {
         return postRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    public Post createPost(PostDto postDto) {
-        Post post = postDto.toEntity();
-        if(post.getId() != null) {
-            return null;
-        }
+    public Post createPost(PostRequestDto requestDto) {
+        Post post = requestDto.toEntity();
         return postRepository.save(post);
     }
 
     @Transactional
-    public Post updatePost(Long id, PostDto postDto){
-        Post post = postDto.toEntity();
-        Post target = postRepository.findById(id).orElse(null);
-        if(target == null || id != post.getId()){
-            log.info("target : {}, id : {}, post.getId() : {}", target, id, post.getId());
-            return null;
+    public Post updatePost(Long id, PostRequestDto requestDto) {
+        Post post = postRepository.findById(id).orElse(null);
+        if (post != null) {
+            post.update(requestDto);
+            postRepository.save(post);
         }
-        target.update(post);
-        log.info("Entity id : {} is updated", target.getId());
-        return postRepository.save(target);
+        return post;
     }
 
     @Transactional
-    public Post deletePost(Long id){
-        Post target = postRepository.findById(id).orElse(null);
-        if(target == null) {
-            return null;
+    public Post deletePost(Long id) {
+        Post post = postRepository.findById(id).orElse(null);
+        if (post != null) {
+            postRepository.delete(post);
         }
-        postRepository.delete(target);
-        log.info("Entity id : {} is deleted", target.getId());
-        return target;
+        return post;
     }
 }

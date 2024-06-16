@@ -6,32 +6,23 @@ import kr.ac.primitive.entity.participant.Participant;
 import kr.ac.primitive.entity.techstack.TechStack;
 import kr.ac.primitive.entity.user.User;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter // id는 변하면 안됨
     private Long id;
 
-    @Column(nullable = false)
     private String title;
     private String summary;
     private String description;
-
-    @Column(nullable = false)
     private boolean isPublic;
-
-    @Column(nullable = false)
     private String image;
-
-    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne
@@ -48,16 +39,16 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String summary, String description, boolean isPublic, String image, LocalDateTime createdAt, User user, List<TechStack> techStacks, List<Participant> participants) {
-        this.title = title;
-        this.summary = summary;
-        this.description = description;
-        this.isPublic = isPublic;
-        this.image = image;
-        this.createdAt = createdAt;
-        this.user = user;
-        this.techStacks = techStacks;
-        this.participants = participants;
+    private Post(Builder builder) {
+        title = builder.title;
+        summary = builder.summary;
+        description = builder.description;
+        isPublic = builder.isPublic;
+        image = builder.image;
+        createdAt = builder.createdAt;
+        user = builder.user;
+        techStacks = builder.techStacks;
+        participants = builder.participants;
     }
 
     public void update(PostRequestDto requestDto) {
@@ -69,5 +60,66 @@ public class Post {
         this.createdAt = LocalDateTime.now();
         this.techStacks = requestDto.getTechStacks();
         this.participants = requestDto.getParticipants();
+    }
+
+    public static class Builder {
+        private String title;
+        private String summary;
+        private String description;
+        private boolean isPublic;
+        private String image;
+        private LocalDateTime createdAt;
+        private User user;
+        private List<TechStack> techStacks;
+        private List<Participant> participants;
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder summary(String summary) {
+            this.summary = summary;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder isPublic(boolean isPublic) {
+            this.isPublic = isPublic;
+            return this;
+        }
+
+        public Builder image(String image) {
+            this.image = image;
+            return this;
+        }
+
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder techStacks(List<TechStack> techStacks) {
+            this.techStacks = techStacks;
+            return this;
+        }
+
+        public Builder participants(List<Participant> participants) {
+            this.participants = participants;
+            return this;
+        }
+
+        public Post build() {
+            return new Post(this);
+        }
     }
 }

@@ -5,7 +5,6 @@ import kr.ac.primitive.entity.post.Post;
 import kr.ac.primitive.entity.techstack.TechStack;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -29,6 +28,14 @@ public class PostRequestDto {
     }
 
     public Post toEntity() {
-        return new Post(title, summary, description, isPublic, image, LocalDateTime.now(), null, techStacks, participants);
+        return new Post.Builder()
+                .title(title)
+                .summary(summary)
+                .description(description)
+                .image(image)
+                .isPublic(isPublic)
+                .techStacks(techStacks)
+                .participants(participants)
+                .build();
     }
 }

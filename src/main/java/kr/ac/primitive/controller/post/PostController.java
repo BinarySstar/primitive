@@ -26,6 +26,12 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 
+    @GetMapping("/random")
+    public ResponseEntity<List<PostResponseDto>> getRandomPosts() {
+        List<PostResponseDto> posts = postService.getRandomPosts();
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPost(@PathVariable Long id){
         Post post = postService.getPost(id);

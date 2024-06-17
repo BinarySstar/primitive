@@ -4,14 +4,13 @@ import kr.ac.primitive.dto.post.request.PostRequestDto;
 import kr.ac.primitive.dto.post.response.PostResponseDto;
 import kr.ac.primitive.entity.post.Post;
 import kr.ac.primitive.entity.post.PostRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
-@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
@@ -24,6 +23,13 @@ public class PostService {
     public List<PostResponseDto> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         return posts.stream().map(PostResponseDto::toDto).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> getRandomPosts() {
+        List<Post> posts = postRepository.findAll();
+        Collections.shuffle(posts);
+        return posts.stream().limit(3).map(PostResponseDto::toDto).toList();
     }
 
     @Transactional(readOnly = true)
@@ -56,3 +62,5 @@ public class PostService {
         return post;
     }
 }
+
+

@@ -137,7 +137,15 @@ class PostRepositoryTest {
 
         // when
         // 저장된 post를 불러오고 PostReqeustDto를 통해 수정
-        PostRequestDto postRequestDto = new PostRequestDto("new title", "new summary", "new description", "new image", false, null, null);
+        PostRequestDto postRequestDto = new PostRequestDto.Builder()
+                .title("new title")
+                .summary("new summary")
+                .description("new description")
+                .image("new image")
+                .isPublic(false)
+                .techStacks(null)
+                .participants(null)
+                .build();
         Post updatedPost = postRepository.findById(savedPost.getId()).orElse(null);
         updatedPost.update(postRequestDto);
 

@@ -17,14 +17,14 @@ public class PostRequestDto {
     private List<TechStack> techStacks;
     private List<Participant> participants;
 
-    public PostRequestDto(String title, String summary, String description, String image, boolean isPublic, List<TechStack> techStacks, List<Participant> participants) {
-        this.title = title;
-        this.summary = summary;
-        this.description = description;
-        this.image = image;
-        this.isPublic = isPublic;
-        this.techStacks = techStacks;
-        this.participants = participants;
+    public PostRequestDto(Builder builder) {
+        this.title = builder.title;
+        this.summary = builder.summary;
+        this.description = builder.description;
+        this.image = builder.image;
+        this.isPublic = builder.isPublic;
+        this.techStacks = builder.techStacks;
+        this.participants = builder.participants;
     }
 
     public Post toEntity() {
@@ -37,5 +37,54 @@ public class PostRequestDto {
                 .techStacks(techStacks)
                 .participants(participants)
                 .build();
+    }
+
+    public static class Builder {
+        private String title;
+        private String summary;
+        private String description;
+        private String image;
+        private boolean isPublic;
+        private List<TechStack> techStacks;
+        private List<Participant> participants;
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder summary(String summary) {
+            this.summary = summary;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder image(String image) {
+            this.image = image;
+            return this;
+        }
+
+        public Builder isPublic(boolean isPublic) {
+            this.isPublic = isPublic;
+            return this;
+        }
+
+        public Builder techStacks(List<TechStack> techStacks) {
+            this.techStacks = techStacks;
+            return this;
+        }
+
+        public Builder participants(List<Participant> participants) {
+            this.participants = participants;
+            return this;
+        }
+
+        public PostRequestDto build() {
+            return new PostRequestDto(this);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class Post {
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "users_id", nullable = false)
     @Getter // user는 변하면 안됨
     private User user;
 

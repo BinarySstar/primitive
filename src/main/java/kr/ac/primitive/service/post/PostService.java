@@ -1,4 +1,4 @@
-package kr.ac.primitive.service;
+package kr.ac.primitive.service.post;
 
 import kr.ac.primitive.dto.post.request.PostRequestDto;
 import kr.ac.primitive.dto.post.response.PostResponseDto;

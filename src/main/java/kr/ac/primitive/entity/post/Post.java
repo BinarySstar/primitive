@@ -1,14 +1,13 @@
 package kr.ac.primitive.entity.post;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import kr.ac.primitive.dto.post.request.PostRequestDto;
-import kr.ac.primitive.entity.participant.Participant;
-import kr.ac.primitive.entity.techstack.TechStack;
-import kr.ac.primitive.entity.user.User;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -25,17 +24,6 @@ public class Post {
     private String image;
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id", nullable = false)
-    @Getter // user는 변하면 안됨
-    private User user;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechStack> techStacks;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Participant> participants;
-
     public Post() {
     }
 
@@ -46,9 +34,9 @@ public class Post {
         isPublic = builder.isPublic;
         image = builder.image;
         createdAt = builder.createdAt;
-        user = builder.user;
-        techStacks = builder.techStacks;
-        participants = builder.participants;
+//        user = builder.user;
+//        techStacks = builder.techStacks;
+//        participants = builder.participants;
     }
 
     public void update(PostRequestDto requestDto) {
@@ -58,8 +46,8 @@ public class Post {
         this.isPublic = requestDto.isPublic();
         this.image = requestDto.getImage();
         this.createdAt = LocalDateTime.now();
-        this.techStacks = requestDto.getTechStacks();
-        this.participants = requestDto.getParticipants();
+//        this.techStacks = requestDto.getTechStacks();
+//        this.participants = requestDto.getParticipants();
     }
 
     public static class Builder {
@@ -69,9 +57,6 @@ public class Post {
         private boolean isPublic;
         private String image;
         private LocalDateTime createdAt;
-        private User user;
-        private List<TechStack> techStacks;
-        private List<Participant> participants;
 
         public Builder title(String title) {
             this.title = title;
@@ -100,21 +85,6 @@ public class Post {
 
         public Builder createdAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder user(User user) {
-            this.user = user;
-            return this;
-        }
-
-        public Builder techStacks(List<TechStack> techStacks) {
-            this.techStacks = techStacks;
-            return this;
-        }
-
-        public Builder participants(List<Participant> participants) {
-            this.participants = participants;
             return this;
         }
 

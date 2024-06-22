@@ -3,7 +3,7 @@ package kr.ac.primitive.controller.post;
 import kr.ac.primitive.dto.post.request.PostRequestDto;
 import kr.ac.primitive.dto.post.response.PostResponseDto;
 import kr.ac.primitive.entity.post.Post;
-import kr.ac.primitive.service.PostService;
+import kr.ac.primitive.service.post.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

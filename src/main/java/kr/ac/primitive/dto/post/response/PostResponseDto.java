@@ -1,11 +1,9 @@
 package kr.ac.primitive.dto.post.response;
 
 import kr.ac.primitive.entity.post.Post;
-import kr.ac.primitive.entity.techstack.TechStack;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class PostResponseDto {
@@ -14,17 +12,58 @@ public class PostResponseDto {
     private String summary;
     private String image;
     private LocalDateTime createdAt;
-    private List<TechStack> techStacks;
 
-    public PostResponseDto(Long id, String title, String summary, String image, LocalDateTime createdAt, List<TechStack> techStacks) {
-        this.id = id;
-        this.title = title;
-        this.summary = summary;
-        this.image = image;
-        this.createdAt = createdAt;
-        this.techStacks = techStacks;
+    public PostResponseDto(Builder builder) {
+        this.id = builder.id;
+        this.title = builder.title;
+        this.summary = builder.summary;
+        this.image = builder.image;
+        this.createdAt = builder.createdAt;
     }
     public static PostResponseDto toDto(Post post) {
-        return new PostResponseDto(post.getId(), post.getTitle(), post.getSummary(), post.getImage(), post.getCreatedAt(), post.getTechStacks());
+        return new PostResponseDto.Builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .summary(post.getSummary())
+                .image(post.getImage())
+                .createdAt(post.getCreatedAt())
+                .build();
+    }
+
+    public static class Builder {
+        private Long id;
+        private String title;
+        private String summary;
+        private String image;
+        private LocalDateTime createdAt;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder summary(String summary) {
+            this.summary = summary;
+            return this;
+        }
+
+        public Builder image(String image) {
+            this.image = image;
+            return this;
+        }
+
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public PostResponseDto build() {
+            return new PostResponseDto(this);
+        }
     }
 }

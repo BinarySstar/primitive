@@ -1,21 +1,17 @@
 package kr.ac.primitive.dto.post.request;
 
-import kr.ac.primitive.entity.participant.Participant;
 import kr.ac.primitive.entity.post.Post;
-import kr.ac.primitive.entity.techstack.TechStack;
 import lombok.Getter;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class PostRequestDto {
     private String title;
     private String summary;
     private String description;
     private String image;
     private boolean isPublic;
-    private List<TechStack> techStacks;
-    private List<Participant> participants;
 
     public PostRequestDto(Builder builder) {
         this.title = builder.title;
@@ -23,8 +19,6 @@ public class PostRequestDto {
         this.description = builder.description;
         this.image = builder.image;
         this.isPublic = builder.isPublic;
-        this.techStacks = builder.techStacks;
-        this.participants = builder.participants;
     }
 
     public Post toEntity() {
@@ -34,8 +28,6 @@ public class PostRequestDto {
                 .description(description)
                 .image(image)
                 .isPublic(isPublic)
-                .techStacks(techStacks)
-                .participants(participants)
                 .build();
     }
 
@@ -45,8 +37,6 @@ public class PostRequestDto {
         private String description;
         private String image;
         private boolean isPublic;
-        private List<TechStack> techStacks;
-        private List<Participant> participants;
 
         public Builder title(String title) {
             this.title = title;
@@ -70,16 +60,6 @@ public class PostRequestDto {
 
         public Builder isPublic(boolean isPublic) {
             this.isPublic = isPublic;
-            return this;
-        }
-
-        public Builder techStacks(List<TechStack> techStacks) {
-            this.techStacks = techStacks;
-            return this;
-        }
-
-        public Builder participants(List<Participant> participants) {
-            this.participants = participants;
             return this;
         }
 

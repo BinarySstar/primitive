@@ -11,7 +11,7 @@ public class PostRequestDto {
     private String summary;
     private String description;
     private String image;
-    private boolean isPublic;
+    private Boolean isPublic;
 
     public PostRequestDto(Builder builder) {
         this.title = builder.title;
@@ -36,7 +36,7 @@ public class PostRequestDto {
         private String summary;
         private String description;
         private String image;
-        private boolean isPublic;
+        private Boolean isPublic;
 
         public Builder title(String title) {
             this.title = title;

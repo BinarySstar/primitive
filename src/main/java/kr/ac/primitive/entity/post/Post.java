@@ -14,13 +14,12 @@ import java.time.LocalDateTime;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter // id는 변하면 안됨
     private Long id;
 
     private String title;
     private String summary;
     private String description;
-    private boolean isPublic;
+    private Boolean isPublic;
     private String image;
     private LocalDateTime createdAt;
 
@@ -33,30 +32,24 @@ public class Post {
         description = builder.description;
         isPublic = builder.isPublic;
         image = builder.image;
-        createdAt = builder.createdAt;
-//        user = builder.user;
-//        techStacks = builder.techStacks;
-//        participants = builder.participants;
+        createdAt = LocalDateTime.now();
     }
 
     public void update(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.summary = requestDto.getSummary();
         this.description = requestDto.getDescription();
-        this.isPublic = requestDto.isPublic();
+        this.isPublic = requestDto.getIsPublic();
         this.image = requestDto.getImage();
         this.createdAt = LocalDateTime.now();
-//        this.techStacks = requestDto.getTechStacks();
-//        this.participants = requestDto.getParticipants();
     }
 
     public static class Builder {
         private String title;
         private String summary;
         private String description;
-        private boolean isPublic;
+        private Boolean isPublic;
         private String image;
-        private LocalDateTime createdAt;
 
         public Builder title(String title) {
             this.title = title;
@@ -73,18 +66,13 @@ public class Post {
             return this;
         }
 
-        public Builder isPublic(boolean isPublic) {
+        public Builder isPublic(Boolean isPublic) {
             this.isPublic = isPublic;
             return this;
         }
 
         public Builder image(String image) {
             this.image = image;
-            return this;
-        }
-
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
             return this;
         }
 

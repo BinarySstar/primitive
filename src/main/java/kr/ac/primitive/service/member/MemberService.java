@@ -21,15 +21,21 @@ public class MemberService {
 
     @Transactional
     public MemberResponseDto register(MemberRequestDto requestDto) {
-        Member member = requestDto.toEntity();
+        validateRequest(requestDto);
 
+        Member member = requestDto.toEntity();
+        memberRepository.save(member);
+        return MemberResponseDto.toDto(member);
+    }
+
+    private void validateRequest(MemberRequestDto requestDto) {
         // 이메일 중복 체크
-        if (memberRepository.existsByEmail(member.getEmail())) {
+        if (memberRepository.existsByEmail(requestDto.getEmail())) {
             throw new EmailAlreadyExistsException("이미 존재하는 이메일입니다!");
         }
 
         // 학번 중복 체크
-        if (memberRepository.existsByStudentId(member.getStudentId())) {
+        if (memberRepository.existsByStudentId(requestDto.getStudentId())) {
             throw new StudentIdAlreadyExistsException("이미 존재하는 학번입니다!");
         }
 
@@ -37,8 +43,5 @@ public class MemberService {
         if (!requestDto.getPassword().equals(requestDto.getCheckPassword())) {
             throw new PasswordMismatchException("비밀번호가 일치하지 않습니다!");
         }
-
-        memberRepository.save(member);
-        return MemberResponseDto.toDto(member);
     }
 }

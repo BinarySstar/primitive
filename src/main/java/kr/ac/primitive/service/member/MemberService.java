@@ -1,0 +1,44 @@
+package kr.ac.primitive.service.member;
+
+import kr.ac.primitive.dto.member.request.MemberRequestDto;
+import kr.ac.primitive.dto.member.response.MemberResponseDto;
+import kr.ac.primitive.entity.member.Member;
+import kr.ac.primitive.entity.member.MemberRepository;
+import kr.ac.primitive.exception.EmailAlreadyExistsException;
+import kr.ac.primitive.exception.PasswordMismatchException;
+import kr.ac.primitive.exception.StudentIdAlreadyExistsException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class MemberService {
+
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    @Transactional
+    public MemberResponseDto register(MemberRequestDto requestDto) {
+        Member member = requestDto.toEntity();
+
+        // 이메일 중복 체크
+        if (memberRepository.existsByEmail(member.getEmail())) {
+            throw new EmailAlreadyExistsException("이미 존재하는 이메일입니다!");
+        }
+
+        // 학번 중복 체크
+        if (memberRepository.existsByStudentId(member.getStudentId())) {
+            throw new StudentIdAlreadyExistsException("이미 존재하는 학번입니다!");
+        }
+
+        // 비밀번호 일치 여부 체크
+        if (!requestDto.getPassword().equals(requestDto.getCheckPassword())) {
+            throw new PasswordMismatchException("비밀번호가 일치하지 않습니다!");
+        }
+
+        memberRepository.save(member);
+        return MemberResponseDto.toDto(member);
+    }
+}

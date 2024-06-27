@@ -1,10 +1,12 @@
 package kr.ac.primitive.service.member;
 
 
+import kr.ac.primitive.dto.member.request.MemberLogInRequestDto;
 import kr.ac.primitive.dto.member.request.MemberRequestDto;
 import kr.ac.primitive.dto.member.response.MemberResponseDto;
 import kr.ac.primitive.entity.member.Member;
 import kr.ac.primitive.entity.member.MemberRepository;
+import kr.ac.primitive.entity.member.Role;
 import kr.ac.primitive.exception.EmailAlreadyExistsException;
 import kr.ac.primitive.exception.PasswordMismatchException;
 import kr.ac.primitive.exception.StudentIdAlreadyExistsException;
@@ -13,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -122,4 +126,31 @@ public class MemberServiceTest {
         // verify
         verify(memberRepository, times(0)).save(any(Member.class));
     }
+
+    @Test
+    void 로그인_성공() {
+        // given
+        Member member = Member.builder()
+                .name("이진성")
+                .email("example@email.com")
+                .studentId("202001234")
+                .password("password")
+                .role(Role.USER)
+                .build();
+
+        MemberLogInRequestDto requestDto = MemberLogInRequestDto.builder()
+                .email("example@email.com")
+                .password("password")
+                .build();
+
+        when(memberRepository.findByEmail(any(String.class))).thenReturn(Optional.of(member));
+        // when(passwordEncoder.matches(any(String.class), any(String.class))).thenReturn(true);
+
+        // when
+        boolean isLogin = memberService.login(requestDto);
+
+        // then
+        assertTrue(isLogin);
+    }
+
 }

@@ -1,10 +1,12 @@
 package kr.ac.primitive.service.member;
 
+import kr.ac.primitive.dto.member.request.MemberLogInRequestDto;
 import kr.ac.primitive.dto.member.request.MemberRequestDto;
 import kr.ac.primitive.dto.member.response.MemberResponseDto;
 import kr.ac.primitive.entity.member.Member;
 import kr.ac.primitive.entity.member.MemberRepository;
 import kr.ac.primitive.exception.EmailAlreadyExistsException;
+import kr.ac.primitive.exception.EmailNotFoundException;
 import kr.ac.primitive.exception.PasswordMismatchException;
 import kr.ac.primitive.exception.StudentIdAlreadyExistsException;
 import org.springframework.stereotype.Service;
@@ -43,5 +45,13 @@ public class MemberService {
         if (!requestDto.getPassword().equals(requestDto.getCheckPassword())) {
             throw new PasswordMismatchException("비밀번호가 일치하지 않습니다!");
         }
+    }
+
+    @Transactional
+    public boolean login(MemberLogInRequestDto requestDto) {
+        Member member = memberRepository.findByEmail(requestDto.getEmail())
+                .orElseThrow(() -> new EmailNotFoundException("존재하지 않는 이메일입니다!"));
+
+        return member.getPassword().equals(requestDto.getPassword());
     }
 }

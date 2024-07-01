@@ -1,5 +1,7 @@
 package kr.ac.primitive.dto.member.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kr.ac.primitive.entity.member.Member;
 import kr.ac.primitive.entity.member.Role;
 import lombok.Builder;
@@ -7,10 +9,20 @@ import lombok.Getter;
 
 @Getter
 public class MemberRequestDto {
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String email;
+
+    @NotBlank
     private String studentId;
+
+    @NotNull
     private String password;
+
+    @NotNull
     private String checkPassword;
 
     @Builder
